@@ -112,6 +112,16 @@ runs/<Zone>/<instance id>/        e.g. runs/Clearfell/G1_2_1628456714
 runs/<Zone>/layouts.json   instance id -> layout letter, orientation, mirrored
 ```
 
+A run of Clearfell, as saved:
+
+| `map.png` | `path.png` | `labels.png` |
+|---|---|---|
+| ![map.png of a Clearfell run](docs/images/clearfell_map.webp) | ![path.png of the same run](docs/images/clearfell_path.webp) | ![labels.png of the same run](docs/images/clearfell_labels.webp) |
+
+The route goes from blue (where the map began) to red (where you left), and the green dot is the entrance.
+The labels show the zone's gates (Clearfell Encampment, The Grelwood), its points of interest and the
+Checkpoints.
+
 Run folders are named by the **instance id** (zone code + seed), which never changes. Which layout a run belongs
 to is kept only in `layouts.json`, because layouts can merge when a later run shows that two of them are one:
 
