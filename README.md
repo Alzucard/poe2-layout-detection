@@ -154,6 +154,17 @@ never fits the earlier one, it is another floor, and every floor with at least 3
 on the same floor (checkpoint) also fades to black, but its map is put back together with the rest. Only the
 first floor (`map.png`, where you came in) is used for grouping runs into layouts.
 
+A run of Temple of Kopec with two floors:
+
+| | `map` | `path` | `labels` |
+|---|---|---|---|
+| Floor 1 | ![map.png of a Temple of Kopec run](docs/images/kopec_map.png) | ![path.png](docs/images/kopec_path.png) | ![labels.png](docs/images/kopec_labels.png) |
+| Floor 2 | ![map_floor2.png](docs/images/kopec_map_floor2.png) | ![path_floor2.png](docs/images/kopec_path_floor2.png) | ![labels_floor2.png](docs/images/kopec_labels_floor2.png) |
+
+On floor 2 the green dot is where you arrived from the stairs. `floors.png` shows both floors stacked:
+
+<img src="docs/images/kopec_floors.webp" alt="floors.png of the same run" width="400">
+
 Runs are grouped into layouts by comparing their maps, also mirrored and rotated (the game shows some layouts
 flipped). Two runs count as the same layout only when their outlines agree and their overall shapes overlap
 too: zones built from shared pieces (a town, reused rooms) otherwise match on one common part. `orientation`
