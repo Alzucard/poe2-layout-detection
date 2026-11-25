@@ -65,6 +65,9 @@ def test_unknown_keys_reported():
     {"hotkeys": {"quit": "ctrl+esc"}},
     {"hotkeys": {"record": "ctrl+"}},
     {"recorder": {"manual": True}, "hotkeys": {"record": "Ctrl+Alt+Q"}},   # the same key as quit
+    {"hotkeys": {"pause": "ctrl+"}},
+    {"hotkeys": {"pause": "ctrl+alt+q"}},                                  # the same key as quit
+    {"hotkeys": {"pause": "ctrl+alt+r"}},                                  # the same key as record
     {"recorder": {"manual": "yes"}},
 ])
 def test_bad_values_raise(data):

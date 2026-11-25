@@ -186,7 +186,7 @@ def test_loop_films_only_with_the_game_in_front_and_space_left(recorder, monkeyp
     assert len(done) == 1 and read_visit_file(done[0].with_suffix(".jsonl")).zone == "Clearfell"
 
 
-@pytest.mark.parametrize("cause", ["game not in front", "disk full"])
+@pytest.mark.parametrize("cause", ["game not in front", "disk full", "press ctrl+alt+p to go on"])
 def test_pause_inside_a_visit_is_a_gap(recorder, monkeypatch, cause):
     r, done = recorder
     monkeypatch.setattr(recorder_module, "Grabber", FakeGrabber)
@@ -203,11 +203,15 @@ def test_pause_inside_a_visit_is_a_gap(recorder, monkeypatch, cause):
         wait_for(r, result="filming", filming=True)
         if cause == "disk full":
             full[0] = True
-        else:
+        elif cause == "game not in front":
             r._window.front = False
+        else:
+            r.toggle_pause()
         wait_for(r, result=cause, filming=False)
         before = r.get_state()["frames"]
         full[0], r._window.front = False, True
+        if cause.startswith("press"):
+            r.toggle_pause()
         end = time.monotonic() + 5
         while r.get_state()["frames"] <= before and time.monotonic() < end:
             time.sleep(0.01)
@@ -431,6 +435,23 @@ def test_manual_recording_films_only_between_start_and_stop(manual):
     r.set_zone(*A)
     r._follow()
     assert r.video is None                                       # and it stays off in the next zone
+
+
+def test_pause_keeps_the_video_and_starting_a_recording_ends_it(manual):
+    r, done = manual
+    r.set_zone(*A)
+    r.set_recording(True)
+    r._follow()
+    film(r)
+    r.toggle_pause()
+    r._follow()
+    assert r._held and r.video.visit == A and done == []        # paused, but the video stays open
+    r.set_recording(False)
+    r._follow()
+    assert r.video is None and len(done) == 1                    # stopping still finishes it
+    r.set_recording(True)
+    r._follow()
+    assert not r._held and r.video.visit == A                    # a new recording isn't paused
 
 
 def test_manual_recording_loop_says_how_to_start(manual, monkeypatch):

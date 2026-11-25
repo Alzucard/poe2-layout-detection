@@ -52,6 +52,7 @@ class TrainingFramesConfig:
 class HotkeyConfig:
     quit: str = "ctrl+alt+q"
     record: str = "ctrl+alt+r"         # starts and stops filming (unless recorder.manual is off)
+    pause: str = "ctrl+alt+p"          # pauses filming and goes on with the same video
 
 
 @dataclass
@@ -118,13 +119,15 @@ class Config:
         need(1 <= self.training_frames.jpeg_quality <= 100, "training_frames.jpeg_quality must be 1..100")
         from .hotkey import parse_hotkey  # imported here, not at the top: hotkey.py loads the Windows libraries
         keys = {}
-        for name in ("quit", "record"):
+        for name in ("quit", "record", "pause"):
             try:
                 keys[name] = parse_hotkey(getattr(self.hotkeys, name))
             except ValueError as e:
                 raise ConfigError(f"hotkeys.{name}: {e}") from e
         need(not self.recorder.manual or keys["quit"] != keys["record"],
              "hotkeys.record must be a different key than hotkeys.quit")
+        need(keys["pause"] != keys["quit"] and (not self.recorder.manual or keys["pause"] != keys["record"]),
+             "hotkeys.pause must be a different key than hotkeys.quit and hotkeys.record")
         area = self.analysis.map_area
         if area is not None:
             need(isinstance(area, list) and len(area) >= 3 and all(

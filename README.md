@@ -24,6 +24,9 @@ Nothing is filmed until you press **ctrl+alt+r** (`hotkeys.record`), and pressin
 and hands the video to the analysis. While it's on, each new zone still gets its own video. To film every zone
 you enter automatically instead, set `"recorder": {"manual": false}`.
 
+**ctrl+alt+p** (`hotkeys.pause`) pauses filming without ending the video, and pressing it again goes on with the
+same video. The analysis treats the pause like a town trip and finds your position again afterwards.
+
 Stop with **Ctrl+C** in the console or **ctrl+alt+q** (works while the game has focus). The zone you are in and
 any videos still waiting are analyzed before the program exits; press Ctrl+C again to skip that. Videos that were
 not analyzed stay in the video folder and are analyzed on the next start. Only one capture can run at a time.
@@ -44,6 +47,7 @@ stop the program with a message.
 | `debug_snapshots` | `false` | save frame + outline to `logs/snapshots` when tracking gets lost |
 | `hotkeys.quit` | `ctrl+alt+q` | hotkey that stops the capture (letters, digits, F1-F24) |
 | `hotkeys.record` | `ctrl+alt+r` | hotkey that starts and stops filming (unless `recorder.manual` is `false`) |
+| `hotkeys.pause` | `ctrl+alt+p` | hotkey that pauses filming and goes on with the same video |
 | `recorder.fps` | `2` | frames filmed per second |
 | `recorder.video_dir` | `videos` | zone videos waiting for analysis (relative paths are inside `data_dir`) |
 | `recorder.video_codec` | `HFYU` | `HFYU` (fast to write) or `FFV1` (about 20% smaller, slower) |

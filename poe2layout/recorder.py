@@ -12,6 +12,9 @@ find the position again.
 With recorder.manual on, nothing is filmed until you press the record hotkey, and pressing it again finishes the
 video. While it's on, everything above works the same (a new zone still gets its own video).
 
+The pause hotkey stops filming without finishing the video, and pressing it again carries on with the same video
+(with a "gap" line, like a town trip). Starting a recording ends a pause.
+
 It's lossless on purpose, because normal video compression wipes out a lot of the thin blue Tab map outline.
 """
 from __future__ import annotations
@@ -126,6 +129,9 @@ class ZoneRecorder(StatefulThread):
         self._wanted = not cfg.recorder.manual    # set_recording writes it the same way
         self._on = self._wanted                   # whether we film zones right now (follows _wanted, see _follow)
         self._off_text = f"press {cfg.hotkeys.record} to film"
+        self._hold_wanted = False                 # toggle_pause writes it the same way
+        self._held = False                        # paused by the hotkey right now (follows _hold_wanted)
+        self._held_text = f"press {cfg.hotkeys.pause} to go on"
         self._visit: Visit = (None, None)
         self._broken_visit: Visit | None = None   # its video couldn't be written, so we don't retry on every frame
         self._last_zone: str | None = None
@@ -139,9 +145,16 @@ class ZoneRecorder(StatefulThread):
             self._requested = (zone, instance)
 
     def set_recording(self, on: bool) -> None:
-        """Start or stop filming (recorder.manual)."""
+        """Start or stop filming (recorder.manual). Starting also ends a pause."""
         with self._state_lock:
             self._wanted = on
+            if on:
+                self._hold_wanted = False
+
+    def toggle_pause(self) -> None:
+        """Pause filming, or go on after a pause. The video stays open meanwhile."""
+        with self._state_lock:
+            self._hold_wanted = not self._hold_wanted
 
     # ---- visits
     def _finish(self) -> None:
@@ -177,9 +190,12 @@ class ZoneRecorder(StatefulThread):
             self._last_zone = zone
 
     def _follow(self) -> None:
-        """Catch up with what set_zone and set_recording asked for."""
+        """Catch up with what set_zone, set_recording and toggle_pause asked for."""
         with self._state_lock:
-            requested, wanted = self._requested, self._wanted
+            requested, wanted, hold = self._requested, self._wanted, self._hold_wanted
+        if hold != self._held:
+            self._held = hold
+            log.info("filming paused" if hold else "filming goes on")
         if wanted != self._on:
             self._on = wanted
             if not wanted and self.video is not None:
@@ -233,6 +249,9 @@ class ZoneRecorder(StatefulThread):
                 elif self.video is None or self.video.visit != self._visit:
                     # no zone, a town, or the character select (a paused video waits for you to come back)
                     self._publish(filming=False, result="town" if is_town(*self._visit) else "no zone")
+                elif self._held:
+                    self._pause(m0)                  # a gap when you go on, just like after an alt-tab
+                    self._publish(filming=False, result=self._held_text)
                 elif not self._window.game_in_front():
                     # you alt-tabbed out, or the game is on another monitor; never film other windows
                     self._pause(m0)

@@ -1,4 +1,4 @@
-"""Global hotkeys (quit, and start/stop recording). RegisterHotKey works while the game has focus and
+"""Global hotkeys (quit, start/stop recording, and pause). RegisterHotKey works while the game has focus and
 doesn't need admin rights."""
 from __future__ import annotations
 

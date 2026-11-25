@@ -7,7 +7,8 @@
   "debug_snapshots": false,
   "hotkeys": {
     "quit": "ctrl+alt+q",
-    "record": "ctrl+alt+r"
+    "record": "ctrl+alt+r",
+    "pause": "ctrl+alt+p"
   },
   "recorder": {
     "fps": 2,

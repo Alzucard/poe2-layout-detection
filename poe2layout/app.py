@@ -54,12 +54,14 @@ def capture(cfg: Config) -> None:
     recorder = ZoneRecorder(cfg, analyzer.add)
     hotkey = Hotkey(cfg.hotkeys.quit, "quit")
     record = Hotkey(cfg.hotkeys.record, "record") if cfg.recorder.manual else None
-    for t in (detector, analyzer, recorder, hotkey, record):
+    pause = Hotkey(cfg.hotkeys.pause, "pause")
+    for t in (detector, analyzer, recorder, hotkey, record, pause):
         if t:
             t.start()
     log.info("capture running - Ctrl+C or %s stops it (the current zone is analyzed first)", hotkey.spec)
     if record:
         log.info("manual recording: %s starts filming, and pressing it again stops it", record.spec)
+    log.info("%s pauses filming, and pressing it again goes on with the same video", pause.spec)
     recording = False
     status = status_logger()
     last_line, last_events, last_t = None, None, 0.0
@@ -72,6 +74,9 @@ def capture(cfg: Config) -> None:
                 record.pressed.clear()
                 recording = not recording
                 recorder.set_recording(recording)
+            if pause.pressed.is_set():
+                pause.pressed.clear()
+                recorder.toggle_pause()
             rs = recorder.get_state()
             line, events = status_line(ds, rs, analyzer.get_state()), status_events(ds, rs)
             now = time.time()
@@ -86,6 +91,7 @@ def capture(cfg: Config) -> None:
         hotkey.stop()
         if record:
             record.stop()
+        pause.stop()
         recorder.stop()
         try:
             recorder.join(timeout=10)            # closes the current video and hands it to the analysis
