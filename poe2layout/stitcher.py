@@ -321,7 +321,7 @@ class Stitcher:
                 if self.frames >= STABLE_FRAMES:
                     self._archive_piece()
                 self.reset()
-                self._floor, self._next_floor = self._next_floor, self._next_floor + 1
+                self._new_floor()
                 return StepResult.FADED
             return StepResult.SKIPPED
         h, w = mask.shape
@@ -348,7 +348,7 @@ class Stitcher:
                 self._archive_piece()
                 self.reset()
                 if self._floor_unsure:       # lost since a gap, so this may be another floor; a merge will tell
-                    self._floor, self._next_floor = self._next_floor, self._next_floor + 1
+                    self._new_floor()
                 self._start_piece(mask, shift)
                 return StepResult.NEW_PIECE
             # If the first frames of a map don't hold together, it started on a bad frame: the old zone's map, the
@@ -448,6 +448,10 @@ class Stitcher:
             if p.floor == drop:
                 p.floor = keep
         self._floor = keep
+
+    def _new_floor(self) -> None:
+        """The map from here on may be another floor, so it gets the next floor number."""
+        self._floor, self._next_floor = self._next_floor, self._next_floor + 1
 
     def _as_piece(self) -> MapPiece:
         m, (x0, y0) = self.cropped_map()
