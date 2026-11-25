@@ -534,6 +534,12 @@ class Stitcher:
         b = (ref_near & (cv2.dilate((mask > 0).astype(np.uint8), k) > 0)).sum() / ref_near.sum()
         return min(a, b) >= min_agree
 
+    def _lost(self, score: float):
+            """No position for this frame: motion has to be confirmed against the map again before we trust it."""
+            self.method = TrackMethod.LOST
+            self._synced = False
+            return None, score
+
     def _locate(self, mask: np.ndarray, accept: float = 0.35, reattach: float = 0.6):
         """Find where this frame sits on the canvas.
         1) Take the motion since the last good frame (phase correlation, since the Tab map only shifts a few px per
@@ -592,15 +598,11 @@ class Stitcher:
         pos, score, second = self._match_in(features, bx0 - w // 2, by0 - h // 2, bx1 + w // 2, by1 + h // 2,
                                             coarse=REATTACH_COARSE)
         if pos is None or score - second < REATTACH_MIN_LEAD:            # two places look alike, so don't guess
-            self.method = TrackMethod.LOST
-            self._synced = False
-            return None, score
+            return self._lost(score)
         c = REATTACH_REFINE_PX                                      # refine the coarse hit
         pos, score, _ = self._match_in(features, pos[0] - c, pos[1] - c, pos[0] + w + c, pos[1] + h + c)
         if pos is None or score < reattach or not self._lines_agree(mask, pos):
-            self.method = TrackMethod.LOST
-            self._synced = False
-            return None, score
+            return self._lost(score)
         self.method = TrackMethod.REATTACH
         self._synced = True
         return pos, score
