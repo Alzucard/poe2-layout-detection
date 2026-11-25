@@ -151,7 +151,7 @@ class ZoneRecorder(StatefulThread):
         path = video.close()
         if path:
             log.info("video of %r finished: %d frames, %.1f GB - handed to the analysis", video.visit[0],
-                     video.frames, path.stat().st_size / 1e9)
+                     video.frames, video.gb())
             self.on_done(path)
 
     def _change_visit(self, visit: Visit) -> None:

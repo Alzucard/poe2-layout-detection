@@ -120,6 +120,19 @@ class LabelVotes:
     def _near(self, it: VotedLabel, key: str, x: float, y: float) -> bool:
         return it.key == key and abs(it.x - x) < self.merge_px and abs(it.y - y) < self.merge_px
 
+    def _merge(self, key: str, x: float, y: float, hits: int, looks: int, screen: tuple) -> bool:
+        """Fold reads of a label at (x, y) into a nearby label of the same name, if there is one. Returns False when
+        there's none, so the caller adds it as a new label."""
+        for it in self.items:
+            if self._near(it, key, x, y):
+                n = it.hits
+                it.x, it.y = (it.x * n + x * hits) / (n + hits), (it.y * n + y * hits) / (n + hits)
+                it.hits = n + hits
+                it.looks += looks
+                it.screen += screen
+                return True
+        return False
+
     def look(self, x0: float, y0: float, x1: float, y1: float, skip=()) -> None:
         """One label read covered this canvas rectangle, minus the `skip` rectangles, which are never read."""
         for it in self.items:
@@ -133,28 +146,14 @@ class LabelVotes:
         if len(key) < 4:
             return
         read = (tuple(screen),) if screen is not None else ()
-        for it in self.items:
-            if self._near(it, key, x, y):
-                n = it.hits
-                it.x, it.y = (it.x * n + x) / (n + 1), (it.y * n + y) / (n + 1)
-                it.hits = n + 1
-                it.screen += read
-                return
-        self.items.append(VotedLabel(key, text, x, y, screen=read))
+        if not self._merge(key, x, y, 1, 0, read):
+            self.items.append(VotedLabel(key, text, x, y, screen=read))
 
     def absorb(self, items: list[VotedLabel], dx: float, dy: float) -> None:
         """Take over another map piece's labels, moved by (dx, dy) to where that piece sits now."""
         for o in items:
             x, y = o.x + dx, o.y + dy
-            for it in self.items:
-                if self._near(it, o.key, x, y):
-                    n, m = it.hits, o.hits
-                    it.x, it.y = (it.x * n + x * m) / (n + m), (it.y * n + y * m) / (n + m)
-                    it.hits = n + m
-                    it.looks += o.looks
-                    it.screen += o.screen
-                    break
-            else:
+            if not self._merge(o.key, x, y, o.hits, o.looks, o.screen):
                 self.items.append(replace(o, x=x, y=y))
 
     def shift(self, dx: float, dy: float) -> None:
