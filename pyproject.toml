@@ -1,0 +1,25 @@
+[project]
+name = "poe2layout"
+version = "0.2.0"
+description = "Records Path of Exile 2 zone layouts, routes and map labels from the Tab map"
+requires-python = ">=3.14"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = [".", "tests"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["poe2layout", "conftest"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "UP", "SIM", "I"]
+ignore = [
+    "SIM105",   # try/except/pass reads fine for Win32 calls
+    "E741",     # short math names (l, I) are used on purpose in image code
+    "E731",
+]

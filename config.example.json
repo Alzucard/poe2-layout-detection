@@ -1,0 +1,29 @@
+{
+  "monitor": 1,
+  "client_log": "",
+  "poll_interval": 0.4,
+  "data_dir": "",
+  "log_level": "INFO",
+  "debug_snapshots": false,
+  "hotkeys": {
+    "quit": "ctrl+alt+q",
+    "record": "ctrl+alt+r"
+  },
+  "recorder": {
+    "fps": 2,
+    "video_dir": "videos",
+    "video_codec": "HFYU",
+    "min_free_gb": 20,
+    "manual": true
+  },
+  "analysis": {
+    "ocr_every": 1.0,
+    "keep_instances": 2
+  },
+  "training_frames": {
+    "enabled": false,
+    "every": 4.0,
+    "max_mb": 3000,
+    "jpeg_quality": 95
+  }
+}

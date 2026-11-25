@@ -1,0 +1,904 @@
+{
+  "Act1": [
+    {
+      "name": "The Riverbank",
+      "id": "G1_1",
+      "act": 1,
+      "connections": [
+        "Clearfell Encampment"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Besieged Encampment"
+        }
+      ]
+    },
+    {
+      "name": "Clearfell Encampment",
+      "id": "G1_Town",
+      "act": 1,
+      "connections": [
+        "The Riverbank",
+        "Clearfell",
+        "Vastiri Outskirts"
+      ],
+      "points_of_interest": []
+    },
+    {
+      "name": "Clearfell",
+      "id": "G1_2",
+      "act": 1,
+      "connections": [
+        "Clearfell Encampment",
+        "Mud Burrow",
+        "The Grelwood"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Frostblood Ritual"
+        },
+        {
+          "name": "Mysterious Campsite"
+        }
+      ]
+    },
+    {
+      "name": "Mud Burrow",
+      "id": "G1_3",
+      "act": 1,
+      "connections": [
+        "Clearfell"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Vile Nest"
+        },
+        {
+          "name": "Hatchery"
+        },
+        {
+          "name": "Woodman's Locker"
+        }
+      ]
+    },
+    {
+      "name": "The Grelwood",
+      "id": "G1_4",
+      "act": 1,
+      "connections": [
+        "Clearfell",
+        "The Red Vale",
+        "The Grim Tangle"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Moving Bramble"
+        },
+        {
+          "name": "Areagne's Hut"
+        },
+        {
+          "name": "Tree of Souls"
+        }
+      ]
+    },
+    {
+      "name": "The Red Vale",
+      "id": "G1_5",
+      "act": 1,
+      "connections": [
+        "The Grelwood"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Obelisk of Rust"
+        },
+        {
+          "name": "Abandoned Stash"
+        }
+      ]
+    },
+    {
+      "name": "The Grim Tangle",
+      "id": "G1_6",
+      "act": 1,
+      "connections": [
+        "The Grelwood",
+        "Cemetery of the Eternals"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Den of the Druid"
+        }
+      ]
+    },
+    {
+      "name": "Cemetery of the Eternals",
+      "id": "G1_7",
+      "act": 1,
+      "connections": [
+        "The Grim Tangle",
+        "Mausoleum of the Praetor",
+        "Tomb of the Consort",
+        "Hunting Grounds"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Memorial of the Lost"
+        },
+        {
+          "name": "Ancient Ruin"
+        }
+      ]
+    },
+    {
+      "name": "Mausoleum of the Praetor",
+      "id": "G1_8",
+      "act": 1,
+      "connections": [
+        "Cemetery of the Eternals"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Heart of the Mausoleum"
+        },
+        {
+          "name": "Forgotten Riches"
+        }
+      ]
+    },
+    {
+      "name": "Tomb of the Consort",
+      "id": "G1_9",
+      "act": 1,
+      "connections": [
+        "Cemetery of the Eternals"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Heart of the Tomb"
+        },
+        {
+          "name": "Haunted Treasure"
+        }
+      ]
+    },
+    {
+      "name": "Hunting Grounds",
+      "id": "G1_11",
+      "act": 1,
+      "connections": [
+        "Cemetery of the Eternals",
+        "Freythorn",
+        "Ogham Farmlands"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Hunt Stone"
+        },
+        {
+          "name": "Dryadic Ritual"
+        },
+        {
+          "name": "Ritual Altar"
+        }
+      ]
+    },
+    {
+      "name": "Freythorn",
+      "id": "G1_12",
+      "act": 1,
+      "connections": [
+        "Hunting Grounds"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Unnamed Ritual"
+        }
+      ]
+    },
+    {
+      "name": "Ogham Farmlands",
+      "id": "G1_13_1",
+      "act": 1,
+      "connections": [
+        "Hunting Grounds",
+        "Ogham Village"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Crop Circle"
+        },
+        {
+          "name": "Una's Home"
+        }
+      ]
+    },
+    {
+      "name": "Ogham Village",
+      "id": "G1_13_2",
+      "act": 1,
+      "connections": [
+        "Ogham Farmlands",
+        "The Manor Ramparts"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Executioner's Block"
+        },
+        {
+          "name": "Renly's Workshop"
+        }
+      ]
+    },
+    {
+      "name": "The Manor Ramparts",
+      "id": "G1_14",
+      "act": 1,
+      "connections": [
+        "Ogham Village",
+        "Ogham Manor"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Gallows"
+        }
+      ]
+    },
+    {
+      "name": "Ogham Manor",
+      "id": "G1_15",
+      "act": 1,
+      "connections": [
+        "The Manor Ramparts"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Throne of the Wolf"
+        },
+        {
+          "name": "Grotesque Altar"
+        }
+      ]
+    }
+  ],
+  "Act2": [
+    {
+      "name": "Vastiri Outskirts",
+      "id": "G2_1",
+      "act": 2,
+      "connections": [
+        "The Ardura Caravan"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Raider's Cliffs"
+        },
+        {
+          "name": "Raided Camp"
+        }
+      ]
+    },
+    {
+      "name": "The Ardura Caravan",
+      "id": "G2_Town",
+      "act": 2,
+      "connections": [
+        "Vastiri Outskirts",
+        "Traitor's Passage",
+        "The Halani Gates",
+        "Keth",
+        "Mastodon Badlands",
+        "Valley of the Titans",
+        "Deshar",
+        "Mawdun Quarry",
+        "The Dreadnought",
+        "Trial of the Sekhemas",
+        "Sandswept Marsh (Act 3 entry)"
+      ],
+      "points_of_interest": []
+    },
+    {
+      "name": "Mawdun Quarry",
+      "id": "G2_10_1",
+      "act": 2,
+      "connections": [
+        "Mawdun Mine",
+        "The Ardura Caravan"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Faridun War Cache"
+        }
+      ]
+    },
+    {
+      "name": "Mawdun Mine",
+      "id": "G2_10_2",
+      "act": 2,
+      "connections": [
+        "Mawdun Quarry"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Munitions Bunker"
+        }
+      ]
+    },
+    {
+      "name": "Traitor's Passage",
+      "id": "G2_2",
+      "act": 2,
+      "connections": [
+        "The Ardura Caravan",
+        "The Halani Gates"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Prison of the Disgraced"
+        },
+        {
+          "name": "The Six Sisters"
+        },
+        {
+          "name": "Looted Dead End"
+        }
+      ]
+    },
+    {
+      "name": "The Halani Gates",
+      "id": "G2_3",
+      "act": 2,
+      "connections": [
+        "The Ardura Caravan",
+        "Traitor's Passage"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Infested Tower"
+        },
+        {
+          "name": "Forward Command Tents"
+        }
+      ]
+    },
+    {
+      "name": "Keth",
+      "id": "G2_4_1",
+      "act": 2,
+      "connections": [
+        "The Ardura Caravan",
+        "The Lost City"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Venom Pit"
+        },
+        {
+          "name": "Abandoned Shrine"
+        },
+        {
+          "name": "Looted Vault"
+        }
+      ]
+    },
+    {
+      "name": "The Lost City",
+      "id": "G2_4_2",
+      "act": 2,
+      "connections": [
+        "Keth",
+        "Buried Shrines"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Galleria"
+        },
+        {
+          "name": "Golden Tomb"
+        }
+      ]
+    },
+    {
+      "name": "Buried Shrines",
+      "id": "G2_4_3",
+      "act": 2,
+      "connections": [
+        "The Lost City"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Heart of Keth"
+        },
+        {
+          "name": "Suspicious Sarcophagus"
+        },
+        {
+          "name": "Elemental Offering"
+        },
+        {
+          "name": "The Water Goddess"
+        }
+      ]
+    },
+    {
+      "name": "Mastodon Badlands",
+      "id": "G2_5_1",
+      "act": 2,
+      "connections": [
+        "The Ardura Caravan",
+        "The Bone Pits"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Fossilised Memorial"
+        }
+      ]
+    },
+    {
+      "name": "The Bone Pits",
+      "id": "G2_5_2",
+      "act": 2,
+      "connections": [
+        "Mastodon Badlands"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Blackrib Pit"
+        }
+      ]
+    },
+    {
+      "name": "Valley of the Titans",
+      "id": "G2_6",
+      "act": 2,
+      "connections": [
+        "The Ardura Caravan",
+        "The Titan Grotto"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Ancient Seals"
+        },
+        {
+          "name": "The Clasped Entry"
+        },
+        {
+          "name": "Medallion (Offering to Amrit)"
+        }
+      ]
+    },
+    {
+      "name": "The Titan Grotto",
+      "id": "G2_7",
+      "act": 2,
+      "connections": [
+        "Valley of the Titans"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Dais of Reckoning"
+        }
+      ]
+    },
+    {
+      "name": "Deshar",
+      "id": "G2_8",
+      "act": 2,
+      "connections": [
+        "The Ardura Caravan",
+        "Path of Mourning"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Forgotten Corpses / The Wretched Sluice"
+        },
+        {
+          "name": "Fallen Dekhara"
+        },
+        {
+          "name": "The Forgotten Hollow"
+        },
+        {
+          "name": "Abandoned Rhoa"
+        }
+      ]
+    },
+    {
+      "name": "Path of Mourning",
+      "id": "G2_9_1",
+      "act": 2,
+      "connections": [
+        "Deshar",
+        "The Spires of Deshar"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Hushed Urn"
+        }
+      ]
+    },
+    {
+      "name": "The Spires of Deshar",
+      "id": "G2_9_2",
+      "act": 2,
+      "connections": [
+        "Path of Mourning"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Defiled Spire"
+        },
+        {
+          "name": "Sisters of Garukhan"
+        },
+        {
+          "name": "Testament of Defiance"
+        }
+      ]
+    },
+    {
+      "name": "The Dreadnought",
+      "id": "G2_12_1",
+      "act": 2,
+      "connections": [
+        "The Ardura Caravan",
+        "Dreadnought Vanguard"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Bridgehead Ambush"
+        }
+      ]
+    },
+    {
+      "name": "Dreadnought Vanguard",
+      "id": "G2_12_2",
+      "act": 2,
+      "connections": [
+        "The Dreadnought",
+        "Sandswept Marsh"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Faridun Throne"
+        }
+      ]
+    }
+  ],
+  "Act3": [
+    {
+      "name": "Sandswept Marsh",
+      "id": "G3_1",
+      "act": 3,
+      "connections": [
+        "The Ardura Caravan",
+        "Ziggurat Encampment"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Foul Ritual"
+        },
+        {
+          "name": "Orok Campfire"
+        },
+        {
+          "name": "Hanging Tree"
+        },
+        {
+          "name": "Expedition Logbook"
+        }
+      ]
+    },
+    {
+      "name": "Ziggurat Encampment",
+      "id": "G3_Town",
+      "act": 3,
+      "connections": [
+        "Sandswept Marsh",
+        "Jungle Ruins",
+        "The Drowned City",
+        "Temple of Kopec",
+        "Utzaal"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Waypoint"
+        },
+        {
+          "name": "Well"
+        },
+        {
+          "name": "Salvage Bench"
+        },
+        {
+          "name": "Time Portal"
+        },
+        {
+          "name": "Oswald's Death Journal"
+        }
+      ]
+    },
+    {
+      "name": "Jungle Ruins",
+      "id": "G3_3",
+      "act": 3,
+      "connections": [
+        "Ziggurat Encampment",
+        "Infested Barrens",
+        "The Venom Crypts",
+        "The Matlan Waterways"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Temple Ruins"
+        },
+        {
+          "name": "Jungle Grave"
+        },
+        {
+          "name": "Troubled Camp"
+        },
+        {
+          "name": "Expedition Logbook"
+        }
+      ]
+    },
+    {
+      "name": "The Venom Crypts",
+      "id": "G3_4",
+      "act": 3,
+      "connections": [
+        "Jungle Ruins"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Priesthood Crypt"
+        },
+        {
+          "name": "Den of the Serpent Priestess"
+        }
+      ]
+    },
+    {
+      "name": "Infested Barrens",
+      "id": "G3_2_1",
+      "act": 3,
+      "connections": [
+        "Jungle Ruins",
+        "Chimeral Wetlands"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Larva Hollow"
+        },
+        {
+          "name": "Canal Mechanism"
+        },
+        {
+          "name": "Troubled Camp"
+        }
+      ]
+    },
+    {
+      "name": "The Azak Bog",
+      "id": "G3_7",
+      "act": 3,
+      "connections": [
+        "The Matlan Waterways"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Gor-gor Mog"
+        },
+        {
+          "name": "Flameskin Ritual"
+        }
+      ]
+    },
+    {
+      "name": "Chimeral Wetlands",
+      "id": "G3_5",
+      "act": 3,
+      "connections": [
+        "Infested Barrens",
+        "Jiquani's Machinarium"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Deadly Nest"
+        },
+        {
+          "name": "Toxic Bloom"
+        },
+        {
+          "name": "Ravaged Camp"
+        }
+      ]
+    },
+    {
+      "name": "The Trial of Chaos",
+      "id": "G3_10_Trial",
+      "act": 3,
+      "connections": [
+        "The Temple of Chaos"
+      ],
+      "points_of_interest": []
+    },
+    {
+      "name": "Jiquani's Machinarium",
+      "id": "G3_6_1",
+      "act": 3,
+      "connections": [
+        "Chimeral Wetlands",
+        "Jiquani's Sanctum"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Oubliette"
+        },
+        {
+          "name": "Supply Room"
+        }
+      ]
+    },
+    {
+      "name": "Jiquani's Sanctum",
+      "id": "G3_6_2",
+      "act": 3,
+      "connections": [
+        "Jiquani's Machinarium"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Grand Soul Core Nexus"
+        },
+        {
+          "name": "Generator"
+        },
+        {
+          "name": "Paquate's Mechanism"
+        }
+      ]
+    },
+    {
+      "name": "The Matlan Waterways",
+      "id": "G3_2_2",
+      "act": 3,
+      "connections": [
+        "Jungle Ruins",
+        "The Azak Bog"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Shaman's Hut"
+        },
+        {
+          "name": "Canal Lever"
+        }
+      ]
+    },
+    {
+      "name": "The Drowned City",
+      "id": "G3_8",
+      "act": 3,
+      "connections": [
+        "Ziggurat Encampment",
+        "The Molten Vault",
+        "Apex of Filth"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Swarming Nest"
+        },
+        {
+          "name": "Shinies"
+        }
+      ]
+    },
+    {
+      "name": "The Molten Vault",
+      "id": "G3_9",
+      "act": 3,
+      "connections": [
+        "The Drowned City"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Aureaduct"
+        }
+      ]
+    },
+    {
+      "name": "Apex of Filth",
+      "id": "G3_11",
+      "act": 3,
+      "connections": [
+        "The Drowned City"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Stenchpools"
+        },
+        {
+          "name": "Bubbling Respite"
+        },
+        {
+          "name": "Ancient Carving"
+        }
+      ]
+    },
+    {
+      "name": "Temple of Kopec",
+      "id": "G3_12",
+      "act": 3,
+      "connections": [
+        "Ziggurat Encampment"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Altar of the Sun"
+        }
+      ]
+    },
+    {
+      "name": "Utzaal",
+      "id": "G3_14",
+      "act": 3,
+      "connections": [
+        "Ziggurat Encampment (Past)",
+        "Aggorat"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Legion Blockade"
+        },
+        {
+          "name": "Trialmaster's Challenge"
+        },
+        {
+          "name": "Peculiar Fortunes"
+        },
+        {
+          "name": "Uromoti's Quarters"
+        },
+        {
+          "name": "Napuatzi's Quarters"
+        },
+        {
+          "name": "Azcapa's Quarters"
+        }
+      ]
+    },
+    {
+      "name": "Aggorat",
+      "id": "G3_16",
+      "act": 3,
+      "connections": [
+        "Utzaal",
+        "The Black Chambers"
+      ],
+      "points_of_interest": [
+        {
+          "name": "Blood Sacrifice"
+        },
+        {
+          "name": "Rejoice!"
+        }
+      ]
+    },
+    {
+      "name": "The Black Chambers",
+      "id": "G3_17",
+      "act": 3,
+      "connections": [
+        "Aggorat"
+      ],
+      "points_of_interest": [
+        {
+          "name": "The Testing Pit"
+        }
+      ]
+    }
+  ]
+}
