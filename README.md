@@ -71,7 +71,7 @@ The log is written to `logs/capture.log` (5 MB, the last 5 kept). The status lin
    file) holds the zone, the instance, the zone you came from and each frame's time.
    Lossless because ordinary video compression wipes out much of the thin blue map outline. That costs disk
    space while the zone is played (roughly 5 MB per frame at 1440p, so 10 minutes are about 6 GB).
-3. **Analysis** (`analyzer.py`): when you enter the next zone, the finished video is analyzed in the background,
+3. **Analysis** (`analyzer.py`): when you end the video, the finished video is analyzed in the background,
    one video after another:
    - **Layout**: the blue outline of the Tab map in every frame (`outline.py`) is stitched into one map of the
      zone (`stitcher.py`).
@@ -82,8 +82,7 @@ The log is written to `logs/capture.log` (5 MB, the last 5 kept). The status lin
      matched against the zone's names: Checkpoint, Waypoint, its gates and points of interest from
      `data/zones.json`, the gate of the zone you came from, and gates learned while you play (see below).
      A label counts once it has been read at the same spot several times. Text that stays at one spot on the
-     screen while you walk (the quest tracker: "Ancient Beacons" reads like "Ancient Ruin") is not a map label
-     and is left out.
+     screen while you walk, in the quest tracker for example, gets left out. 
 4. **Saving** (`library.py`): the run is saved, sorted into a layout (`layouts.py`), and the video is deleted.
    A video whose analysis fails, or of which less than half the frames in its visit file can be read (a
    crash while filming), is moved to `<video_dir>/failed/` so it isn't retried on every start.
