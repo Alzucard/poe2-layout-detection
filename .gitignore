@@ -13,3 +13,7 @@ logs/
 dataset/
 videos/
 captures/
+
+# IDE files (Visual Studio keeps its settings in .vs/, its own environment in env/)
+.vs/
+env/
