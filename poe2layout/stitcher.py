@@ -195,7 +195,7 @@ class Stitcher:
             second = next((r[0] for r in ranked[1:] if abs(r[1] - dx) + abs(r[2] - dy) > 30), 0.0)   # elsewhere
             px, py = (cx0 + dx, cy0 + dy) if piece_smaller else (cx0 - dx, cy0 - dy)   # top-left of the piece's crop
             ph, pw = piece.image.shape
-            if px < 0 or py < 0 or px + pw > self.canvas_size or py + ph > self.canvas_size:
+            if not self._on_canvas(px, py, pw, ph):
                 continue
             # how much outline the two maps really share when placed like this
             here = self.map_window(px, py, px + pw, py + ph)
@@ -381,12 +381,16 @@ class Stitcher:
         self._synced = True              # the next frame can use the motion from this one, even after a gap
         self._paint(mask, shift)
 
+    def _on_canvas(self, x: int, y: int, w: int, h: int) -> bool:
+        """True when the w x h rectangle with its top-left at (x, y) lies fully on the canvas."""
+        return x >= 0 and y >= 0 and x + w <= self.canvas_size and y + h <= self.canvas_size
+
     def _fit_on_canvas(self, pos, w: int, h: int):
         """The frame would lie (partly) off the canvas, so move the whole map until the explored part plus this frame
         sit in the middle again. Returns None when the map is bigger than the canvas."""
         x, y = pos
         n = self.canvas_size
-        if x >= 0 and y >= 0 and x + w <= n and y + h <= n:
+        if self._on_canvas(x, y, w, h):
             return pos
         bx0, by0, bx1, by1 = self._bbox or (x, y, x + w, y + h)
         ux0, uy0, ux1, uy1 = min(bx0, x), min(by0, y), max(bx1, x + w), max(by1, y + h)
@@ -510,12 +514,10 @@ class Stitcher:
         can't be checked, so a search must not place it."""
         ox, oy = pos
         h, w = mask.shape
-        if ox < 0 or oy < 0 or ox + w > self.canvas_size or oy + h > self.canvas_size:
+        if not self._on_canvas(ox, oy, w, h):
             return False
-        hits = self.hits[oy:oy + h, ox:ox + w].astype(np.float32)
-        seen = self.seen[oy:oy + h, ox:ox + w].astype(np.float32)
-        known = seen >= 2
-        ref = (hits >= np.maximum(1, VOTE_RATIO * seen)) & known
+        known = self.seen[oy:oy + h, ox:ox + w] >= 2
+        ref = self.map_window(ox, oy, ox + w, oy + h) > 0
         mine = (mask > 0) & known
         if int(mine.sum()) < min_px or int(ref.sum()) < min_px:
             return False
