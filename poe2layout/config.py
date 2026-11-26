@@ -124,10 +124,12 @@ class Config:
                 keys[name] = parse_hotkey(getattr(self.hotkeys, name))
             except ValueError as e:
                 raise ConfigError(f"hotkeys.{name}: {e}") from e
-        need(not self.recorder.manual or keys["quit"] != keys["record"],
-             "hotkeys.record must be a different key than hotkeys.quit")
-        need(keys["pause"] != keys["quit"] and (not self.recorder.manual or keys["pause"] != keys["record"]),
-             "hotkeys.pause must be a different key than hotkeys.quit and hotkeys.record")
+        used: dict[tuple[int, int], str] = {}
+        for name, key in keys.items():
+            if name == "record" and not self.recorder.manual:
+                continue                       # not registered then, so it may share a key
+            need(key not in used, f"hotkeys.{name} must be a different key than hotkeys.{used.get(key)}")
+            used[key] = name
         area = self.analysis.map_area
         if area is not None:
             need(isinstance(area, list) and len(area) >= 3 and all(

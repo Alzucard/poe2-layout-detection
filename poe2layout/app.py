@@ -45,6 +45,14 @@ def status_events(detector: dict, recorder: dict) -> tuple:
             recorder.get("filming"), recorder.get("result"), recorder.get("error"))
 
 
+def was_pressed(key: Hotkey | None) -> bool:
+    """True once for each press of the hotkey."""
+    if key is None or not key.pressed.is_set():
+        return False
+    key.pressed.clear()
+    return True
+
+
 def capture(cfg: Config) -> None:
     """Film zone visits until Ctrl+C or the quit hotkey. The videos still waiting get analyzed before we exit."""
     set_dpi_aware()
@@ -55,14 +63,14 @@ def capture(cfg: Config) -> None:
     hotkey = Hotkey(cfg.hotkeys.quit, "quit")
     record = Hotkey(cfg.hotkeys.record, "record") if cfg.recorder.manual else None
     pause = Hotkey(cfg.hotkeys.pause, "pause")
-    for t in (detector, analyzer, recorder, hotkey, record, pause):
+    hotkeys = (hotkey, record, pause)
+    for t in (detector, analyzer, recorder, *hotkeys):
         if t:
             t.start()
     log.info("capture running - Ctrl+C or %s stops it (the current zone is analyzed first)", hotkey.spec)
     if record:
         log.info("manual recording: %s starts filming, and pressing it again stops it", record.spec)
     log.info("%s pauses filming, and pressing it again goes on with the same video", pause.spec)
-    recording = False
     status = status_logger()
     last_line, last_events, last_t = None, None, 0.0
     try:
@@ -70,12 +78,9 @@ def capture(cfg: Config) -> None:
             ds = detector.get_state()
             # the game log's instance (zone code + seed) lets a portal trip back continue the same map
             recorder.set_zone(ds.get("zone"), ds.get("instance"))
-            if record and record.pressed.is_set():
-                record.pressed.clear()
-                recording = not recording
-                recorder.set_recording(recording)
-            if pause.pressed.is_set():
-                pause.pressed.clear()
+            if was_pressed(record):
+                recorder.toggle_recording()
+            if was_pressed(pause):
                 recorder.toggle_pause()
             rs = recorder.get_state()
             line, events = status_line(ds, rs, analyzer.get_state()), status_events(ds, rs)
@@ -88,10 +93,9 @@ def capture(cfg: Config) -> None:
         pass
     finally:
         detector.stop()
-        hotkey.stop()
-        if record:
-            record.stop()
-        pause.stop()
+        for key in hotkeys:
+            if key:
+                key.stop()
         recorder.stop()
         try:
             recorder.join(timeout=10)            # closes the current video and hands it to the analysis

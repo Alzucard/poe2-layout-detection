@@ -454,6 +454,18 @@ def test_pause_keeps_the_video_and_starting_a_recording_ends_it(manual):
     assert not r._held and r.video.visit == A                    # a new recording isn't paused
 
 
+def test_toggle_recording_starts_and_stops(manual):
+    r, done = manual
+    r.set_zone(*A)
+    r.toggle_recording()
+    r._follow()
+    assert r.video.visit == A
+    film(r)
+    r.toggle_recording()
+    r._follow()
+    assert r.video is None and len(done) == 1
+
+
 def test_manual_recording_loop_says_how_to_start(manual, monkeypatch):
     r, done = manual
     monkeypatch.setattr(recorder_module, "Grabber", FakeGrabber)

@@ -115,6 +115,11 @@ def test_old_setting_names_with_a_broken_new_section_raise_config_error():
         config_from_dict({"analysis": {"collect_frames": True}, "training_frames": 5})
 
 
+def test_record_hotkey_may_share_a_key_when_recording_is_not_manual():
+    cfg, _ = config_from_dict({"recorder": {"manual": False}, "hotkeys": {"record": "ctrl+alt+p"}})
+    assert cfg.hotkeys.record == cfg.hotkeys.pause
+
+
 def test_recording_is_started_by_hotkey_by_default():
     cfg, _ = config_from_dict({})
     assert cfg.recorder.manual is True and cfg.hotkeys.record == "ctrl+alt+r"

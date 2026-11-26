@@ -151,6 +151,12 @@ class ZoneRecorder(StatefulThread):
             if on:
                 self._hold_wanted = False
 
+    def toggle_recording(self) -> None:
+        """Start filming, or stop it (the record hotkey)."""
+        with self._state_lock:
+            on = not self._wanted
+        self.set_recording(on)
+
     def toggle_pause(self) -> None:
         """Pause filming, or go on after a pause. The video stays open meanwhile."""
         with self._state_lock:
