@@ -1,6 +1,6 @@
 [project]
 name = "poe2layout"
-version = "0.2.0"
+version = "1.0.0"
 description = "Records Path of Exile 2 zone layouts, routes and map labels from the Tab map"
 requires-python = ">=3.14"
 license = "MIT"
