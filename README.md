@@ -216,3 +216,8 @@ With `training_frames.enabled`, the analysis keeps a raw frame of the zone video
 The code is the `poe2layout` package (`python -m poe2layout [capture|analyze]`); the tests in `tests/` use
 synthetic maps and a few real frames (`tests/frames/`), and need neither the game nor OCR. GitHub Actions runs
 the tests and ruff on every push to `main` and `dev` (`.github/workflows/tests.yml`).
+
+## License
+
+MIT, see [LICENSE](LICENSE). You can use, change and share the code freely, as long as you keep the
+copyright notice and credit.
