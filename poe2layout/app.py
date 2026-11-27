@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import time
 
+from . import __version__
 from .analyzer import Analyzer
 from .config import Config, ConfigError, load_config
 from .detector import Detector
@@ -142,6 +143,7 @@ def main(command: str = "capture") -> int:
         print(f"config.json: {e}")
         return 2
     setup_logging(cfg.log_level, cfg.logs_dir)
+    log.info("poe2layout %s", __version__)
     for problem in problems:
         log.warning(problem)
     try:

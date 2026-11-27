@@ -12,3 +12,5 @@ Words used throughout the code, the saved files and the README:
     piece       part of a map whose position against the rest got lost (merged back once it fits)
     layout      a group of runs with the same map (letters A, B, ...), kept in runs/<zone>/layouts.json
 """
+
+__version__ = "1.0.0"     # also in pyproject.toml (a test checks they match); see "Releases" in the README

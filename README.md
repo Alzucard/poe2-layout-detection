@@ -217,6 +217,19 @@ The code is the `poe2layout` package (`python -m poe2layout [capture|analyze]`);
 synthetic maps and a few real frames (`tests/frames/`), and need neither the game nor OCR. GitHub Actions runs
 the tests and ruff on every push to `main` and `dev` (`.github/workflows/tests.yml`).
 
+### Releases
+
+Versions follow [SemVer](https://semver.org) (`MAJOR.MINOR.PATCH`), and [CHANGELOG.md](CHANGELOG.md) lists what
+changed in each one. Work happens on `dev`; `main` only gets released versions. To release:
+
+1. On `dev`: set the new version in `poe2layout/__init__.py` and `pyproject.toml`, rename "Unreleased" in the
+   changelog to the version and date, and commit.
+2. Fast-forward `main` to `dev` and push both.
+3. Tag it and publish the release with the changelog text:
+   `git tag -a v1.1.0 -m "Release 1.1.0"`, `git push origin v1.1.0`, `gh release create v1.1.0 --notes "..."`.
+
+A published tag is never moved or reused: anything that changes after a release goes into the next version.
+
 ## License
 
 MIT, see [LICENSE](LICENSE). You can use, change and share the code freely, as long as you keep the
