@@ -52,6 +52,13 @@ def _overlap(a, b) -> int:
     return max(0, min(a[2], b[2]) - max(a[0], b[0])) * max(0, min(a[3], b[3]) - max(a[1], b[1]))
 
 
+def _outlined_text(img: np.ndarray, text: str, org: tuple[int, int], color: tuple,
+                   scale: float = FONT_SCALE) -> None:
+    """Text with a dark outline, so it's readable on walls."""
+    for c, w in (((0, 0, 0), 5), (color, FONT_THICKNESS)):
+        cv2.putText(img, text, org, FONT, scale, c, w, cv2.LINE_AA)
+
+
 def draw_labels(img: np.ndarray, labels: list[tuple]) -> None:
     """Dots with their names, with the names placed so they don't overlap each other or any dot. labels: [(text, x,
     y, color, dot radius)]. A negative radius draws a ring instead of a dot, for the entrance: it often sits on the
@@ -95,9 +102,7 @@ def draw_labels(img: np.ndarray, labels: list[tuple]) -> None:
             cv2.circle(img, (x, y), r, col, -1)
     for text, _x, _y, col, _r, box, _dist in out:
         (_, th), _ = cv2.getTextSize(text, FONT, FONT_SCALE, FONT_THICKNESS)
-        org = (box[0] + 4, box[1] + 4 + th)
-        for c, w in (((0, 0, 0), 5), (col, FONT_THICKNESS)):    # a dark outline so it's readable on walls
-            cv2.putText(img, text, org, FONT, FONT_SCALE, c, w, cv2.LINE_AA)
+        _outlined_text(img, text, (box[0] + 4, box[1] + 4 + th), col)
 
 
 def render_floors(folder: Path, maps: list[np.ndarray], gap: int = 60) -> None:
@@ -108,8 +113,7 @@ def render_floors(folder: Path, maps: list[np.ndarray], gap: int = 60) -> None:
         row = np.full((m.shape[0] + gap, w, 3), BACKGROUND_GRAY, np.uint8)
         x = (w - m.shape[1]) // 2
         row[gap:, x:x + m.shape[1]] = map_picture(m)
-        for c, t in (((0, 0, 0), 5), ((245, 245, 245), FONT_THICKNESS)):
-            cv2.putText(row, f"Floor {i}", (10, gap - 15), FONT, FONT_SCALE * 1.5, c, t, cv2.LINE_AA)
+        _outlined_text(row, f"Floor {i}", (10, gap - 15), (245, 245, 245), FONT_SCALE * 1.5)
         rows.append(row)
     imwrite(folder / "floors.png", np.vstack(rows))
 

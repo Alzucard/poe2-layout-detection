@@ -256,12 +256,10 @@ class ZoneRecorder(StatefulThread):
                     # no zone, a town, or the character select (a paused video waits for you to come back)
                     self._publish(filming=False, result="town" if is_town(*self._visit) else "no zone")
                 elif self._held:
-                    self._pause(m0)                  # a gap when you go on, just like after an alt-tab
-                    self._publish(filming=False, result=self._held_text)
+                    self._not_filming(m0, self._held_text)   # a gap when you go on, just like after an alt-tab
                 elif not self._window.game_in_front():
                     # you alt-tabbed out, or the game is on another monitor; never film other windows
-                    self._pause(m0)
-                    self._publish(filming=False, result=self._window.reason)
+                    self._not_filming(m0, self._window.reason)
                     moved = self._window.reason == "game on another monitor"
                     if moved and m0 - last_monitor_check > MONITOR_CHECK_EVERY:
                         last_monitor_check = m0
@@ -273,8 +271,7 @@ class ZoneRecorder(StatefulThread):
                         if disk_full and not was_full:
                             log.warning("less than %.0f GB free in %s - filming paused", self.min_free_gb, self.folder)
                     if disk_full:
-                        self._pause(m0)
-                        self._publish(filming=False, result="disk full")
+                        self._not_filming(m0, "disk full")
                     else:
                         self._film(grabber.grab(), t0, m0)
                 self._loop_ok()
@@ -294,6 +291,11 @@ class ZoneRecorder(StatefulThread):
     def _pause(self, t: float) -> None:
         if self._paused_since is None:
             self._paused_since = t
+
+    def _not_filming(self, t: float, result: str) -> None:
+        """This frame isn't filmed (paused, game not in front, disk full). t: monotonic time, for GAP_AFTER."""
+        self._pause(t)
+        self._publish(filming=False, result=result)
 
     def _new_monitor(self, grabber: Grabber) -> Grabber:
         """The filmed monitor as the system reports it right now, since its resolution or position may have changed."""

@@ -69,10 +69,15 @@ def _panel_border(frame: np.ndarray, x: int) -> bool:
     return any(float(steps[int(y0 * h):int(y1 * h)].mean(axis=0).max()) >= PANEL_SCORE for y0, y1 in PANEL_BANDS)
 
 
+def panel_edge(h: int) -> int:
+    """Distance (px) of a side panel's inner border from the screen edge, for a screen h px high."""
+    return round(PANEL_EDGE * h)
+
+
 def panel_sides(frame: np.ndarray) -> tuple[bool, bool]:
     """Returns (left, right): which side panels are open."""
     h, w = frame.shape[:2]
-    edge = round(PANEL_EDGE * h)
+    edge = panel_edge(h)
     if not 4 <= edge <= w // 2 - 4:
         return False, False
     return _panel_border(frame, edge - 1), _panel_border(frame, w - edge)
@@ -82,7 +87,7 @@ def view_shift(frame: np.ndarray) -> int:
     """Screen px from the screen centre to the player, sideways. It's positive when a left panel is open, negative
     for a right one, and 0 when neither or both are open."""
     left, right = panel_sides(frame)
-    return (round(PANEL_EDGE * frame.shape[0]) // 2) * (int(left) - int(right))
+    return (panel_edge(frame.shape[0]) // 2) * (int(left) - int(right))
 
 
 def color_gains(frame: np.ndarray) -> tuple[float, float]:
@@ -127,7 +132,7 @@ def outline_mask(frame: np.ndarray, area: MapArea = DEFAULT_MAP_AREA) -> np.ndar
     glow = cv2.dilate(cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((7, 7), np.uint8)), np.ones((5, 5), np.uint8))
     m = cv2.bitwise_and(m, cv2.bitwise_not(glow))
     m[~map_area_mask(*m.shape, area)] = 0
-    edge = round(PANEL_EDGE * m.shape[0])
+    edge = panel_edge(m.shape[0])
     if left:
         m[:, :edge] = 0
     if right:
